@@ -6,7 +6,7 @@
 /*   By: yoneshev <yoneshev@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2026/04/01 17:28:04 by yoneshev      #+#    #+#                 */
-/*   Updated: 2026/04/01 18:30:42 by yoneshev      ########   odam.nl         */
+/*   Updated: 2026/04/02 17:38:52 by yoneshev      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,10 @@ char	*get_newline(char **all_read, int fd)
 	{
 		buf = malloc(BUFFER_SIZE + 1);
 		if (!buf)
-		{
-			if (*all_read)
-				free(*all_read);
 			return (NULL);
-		}
 		br = read(fd, buf, BUFFER_SIZE);
 		if (br == -1)
-			return (NULL);
+			return (free(buf), NULL);
 		if (br == 0)
 			return (free(buf), *all_read);
 		buf[br] = '\0';
@@ -58,6 +54,11 @@ char	*check_leftover(char **leftover, char **all_read)
 		i++;
 	line = ft_strndup(test, i + 1);
 	*leftover = ft_strdup(test + i + 1);
+	if (ft_strlen(*leftover) == 0)
+	{
+		free(*leftover);
+		*leftover = NULL;
+	}
 	free(test);
 	return (line);
 }
@@ -68,6 +69,8 @@ char *get_next_line(int fd)
 	char		*all_read;
 	char		*line;
 
+	if (fd < 0)
+		return (NULL);
 	all_read = leftover;
 	leftover = NULL;
 	if (!get_newline(&all_read, fd))
@@ -82,15 +85,18 @@ char *get_next_line(int fd)
 
 // int main()
 // {
-// 	int fd = open("text.txt", O_RDONLY);
+// 	// int fd = open("text.txt", O_RDONLY);
+// 	int fd = open("empty", O_RDONLY);
+// 	// int fd = open("text2.txt", O_RDONLY);
 // 	char *x;
 // 	x = get_next_line(fd);
 // 	int i = 0;
 // 	while (x)
 // 	{
-// 		i++;
-// 		printf("%s", x);
+// 		printf("%d: %s", i, x);
 // 		free(x);
 // 		x = get_next_line(fd);
+// 		i++;
 // 	}
+// 	printf("%d: %s", i, x);
 // }
