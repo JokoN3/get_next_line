@@ -6,7 +6,7 @@
 /*   By: yoneshev <yoneshev@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2026/04/01 17:28:04 by yoneshev      #+#    #+#                 */
-/*   Updated: 2026/04/02 17:38:52 by yoneshev      ########   odam.nl         */
+/*   Updated: 2026/04/02 17:50:06 by yoneshev      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,22 +44,20 @@ char	*check_leftover(char **leftover, char **all_read)
 {
 	char	*line;
 	int		i;
-	char	*test;
 
-	test = *all_read;
 	i = 0;
-	if (!ft_strchr(test, '\n'))
-		return (test);
-	while (test[i] != '\n')
+	if (!ft_strchr(*all_read, '\n'))
+		return (*all_read);
+	while ((*all_read)[i] != '\n')
 		i++;
-	line = ft_strndup(test, i + 1);
-	*leftover = ft_strdup(test + i + 1);
+	line = ft_strndup(*all_read, i + 1);
+	*leftover = ft_strdup((*all_read) + i + 1);
 	if (ft_strlen(*leftover) == 0)
 	{
 		free(*leftover);
 		*leftover = NULL;
 	}
-	free(test);
+	free(*all_read);
 	return (line);
 }
 
@@ -86,7 +84,7 @@ char *get_next_line(int fd)
 // int main()
 // {
 // 	// int fd = open("text.txt", O_RDONLY);
-// 	int fd = open("empty", O_RDONLY);
+// 	int fd = open("only_nl.txt", O_RDONLY);
 // 	// int fd = open("text2.txt", O_RDONLY);
 // 	char *x;
 // 	x = get_next_line(fd);
