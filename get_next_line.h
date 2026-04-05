@@ -6,7 +6,7 @@
 /*   By: yoneshev <yoneshev@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2026/03/29 20:19:36 by yoneshev      #+#    #+#                 */
-/*   Updated: 2026/04/01 18:26:16 by yoneshev      ########   odam.nl         */
+/*   Updated: 2026/04/05 17:25:32 by yoneshev      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@
 # include <unistd.h>
 
 char	*get_next_line(int fd);
-char	*check_leftover(char **leftover, char **all_read);
-char	*get_newline(char **all_read, int fd);
+char	*extract_line(char **leftover, char **all_read);
+char	*get_newline_in_read(char **all_read, int fd);
 char	*ft_strchr(const char *s, int c);
 char	*ft_strndup(const char *s, size_t n);
 char	*ft_strdup(const char *s);
